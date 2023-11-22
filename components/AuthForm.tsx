@@ -3,15 +3,26 @@ import { PATH_ROUTER } from '@/constants/route.constant'
 import Link from 'next/link'
 import { FaFacebookF } from 'react-icons/fa'
 import Input from './Input'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { loginFormSchema, registerFormSchema } from '@/common/schemas/users.schema'
+import { useMutation } from '@tanstack/react-query'
+import { AuthSuccess } from '@/interfaces/users.interface'
+import { loginApi, registerApi } from '@/apis/users.api'
+import { ErrorResponse } from '@/interfaces/response.interface'
+import { useToast } from './ui/use-toast'
+import { getErrorFromResponse } from '@/lib/utils'
 
-interface AuthFormProps {}
+function saveToken(result: AuthSuccess) {
+  localStorage.setItem('access_token', result.data.access_token)
+  localStorage.setItem('refresh_token', result.data.refresh_token)
+}
 
 export default function AuthForm() {
   const pathName = usePathname()
+  const router = useRouter()
+  const { toast } = useToast()
 
   // Check if pathName is login or register
   const isLogin = pathName.includes(PATH_ROUTER.LOGIN)
@@ -27,6 +38,26 @@ export default function AuthForm() {
   } = useForm<any>({
     resolver: yupResolver(isLogin ? loginFormSchema : registerFormSchema)
   })
+
+  // Handle submit form and call api
+  // Create auth mutation instead of login and register mutation
+  const authMutation = useMutation({
+    mutationFn: (data: any) => (isLogin ? loginApi(data) : registerApi(data)),
+    onSuccess: (result) => {
+      saveToken(result)
+      router.push(PATH_ROUTER.HOME)
+    },
+    onError: (error: ErrorResponse) => {
+      toast({
+        title: getErrorFromResponse(error),
+        variant: 'destructive'
+      })
+    }
+  })
+
+  const handleSubmitForm = (data: any) => {
+    authMutation.mutate(data)
+  }
 
   return (
     <div className='min-h-screen flex flex-col items-center justify-center bg-gray-300'>
@@ -48,7 +79,7 @@ export default function AuthForm() {
           </div>
         </div>
         <div className='mt-10'>
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(handleSubmitForm)}>
             {getInfoByRole({
               registerInfo: (
                 <div className='flex flex-col mb-6'>
