@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const registerFormSchema = yup.object({
+export const IRegisterFormSchema = yup.object({
   name: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
@@ -10,7 +10,7 @@ export const registerFormSchema = yup.object({
     .required('Confirm password is required')
 })
 
-export const loginFormSchema = yup.object({
+export const ILoginFormSchema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(6).required()
 })

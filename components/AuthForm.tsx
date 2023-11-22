@@ -6,15 +6,15 @@ import Input from './Input'
 import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { loginFormSchema, registerFormSchema } from '@/common/schemas/users.schema'
+import { ILoginFormSchema, IRegisterFormSchema } from '@/common/schemas/users.schema'
 import { useMutation } from '@tanstack/react-query'
-import { AuthSuccess } from '@/interfaces/users.interface'
+import { IAuthSuccess } from '@/interfaces/users.interface'
 import { loginApi, registerApi } from '@/apis/users.api'
 import { ErrorResponse } from '@/interfaces/response.interface'
 import { useToast } from './ui/use-toast'
 import { getErrorFromResponse } from '@/lib/utils'
 
-function saveToken(result: AuthSuccess) {
+function saveToken(result: IAuthSuccess) {
   localStorage.setItem('access_token', result.data.access_token)
   localStorage.setItem('refresh_token', result.data.refresh_token)
 }
@@ -36,7 +36,7 @@ export default function AuthForm() {
     handleSubmit,
     formState: { errors }
   } = useForm<any>({
-    resolver: yupResolver(isLogin ? loginFormSchema : registerFormSchema)
+    resolver: yupResolver(isLogin ? ILoginFormSchema : IRegisterFormSchema)
   })
 
   // Handle submit form and call api

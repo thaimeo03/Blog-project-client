@@ -1,7 +1,7 @@
-import { AuthSuccess } from '@/interfaces/users.interface'
+import { IRefreshTokenSuccess } from '@/interfaces/users.interface'
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-export const URL = 'http://localhost:9999' as string
+export const URL = process.env.NEXT_PUBLIC_BE_HOST as string
 
 class Api {
   private api
@@ -19,12 +19,12 @@ class Api {
     try {
       const refresh_token = localStorage.getItem('refresh_token')
       if (!refresh_token) throw new Error('No refresh token')
-      const response = await axios.post<AuthSuccess>(`${URL}/users/refresh-token`, {
+      const response = await axios.post<IRefreshTokenSuccess>(`${URL}/users/refresh-token`, {
         refresh_token
       })
-      const { refresh_token: new_refresh_token, access_token: new_access_token } = response.data.data
+
+      const { access_token: new_access_token } = response.data.data
       localStorage.setItem('access_token', new_access_token)
-      localStorage.setItem('refresh_token', new_refresh_token)
       return new_access_token
     } catch (error) {
       console.log(error)
@@ -47,7 +47,7 @@ class Api {
       })
       return response
     } catch (error) {
-      if (error instanceof AxiosError && error.response && error.response.status === 500) {
+      if (error instanceof AxiosError && error.response && error.response.status === 401) {
         const newToken = await this.refreshToken()
         if (newToken) {
           const response = await this.api({
