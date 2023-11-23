@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useEffect } from 'react'
-import { AuthContext, AuthContextType } from './AuthContextProvider'
+import { AuthContext, AuthContextType } from '../app/(auth)/_components/AuthContextProvider'
 import { redirect } from 'next/navigation'
 import { getIProfileUserApi } from '@/apis/users.api'
 import { useQuery } from '@tanstack/react-query'

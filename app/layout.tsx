@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
-import AuthContextProvider from '@/components/AuthContextProvider'
+import AuthContextProvider from '@/app/(auth)/_components/AuthContextProvider'
+import Header from '@/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
