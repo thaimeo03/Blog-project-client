@@ -5,7 +5,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <ProtectedRoutes>
       <Header />
-      {children}
+      <div className='md:container px-2'>{children}</div>
     </ProtectedRoutes>
   )
 }
