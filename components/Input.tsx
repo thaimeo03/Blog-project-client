@@ -12,7 +12,7 @@ export default function Input({ classCustom, register, errors, ...rest }: InputP
     <div>
       <input
         className={twMerge(
-          'text-sm sm:text-base placeholder-gray-500 pr-4 pl-2 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400',
+          'text-sm sm:text-base placeholder-gray-500 pr-4 pl-2 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400 dark:bg-white dark:text-black dark:focus:bg-slate-100',
           classCustom
         )}
         {...rest}

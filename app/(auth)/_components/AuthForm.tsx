@@ -187,9 +187,9 @@ export default function AuthForm() {
             })}
             <div className='flex items-center mb-6 -mt-2'>
               <div className='flex ml-auto'>
-                <a href='#' className='inline-flex text-xs sm:text-sm text-blue-500 hover:text-blue-700'>
+                <Link href='#' className='inline-flex text-xs sm:text-sm text-blue-500 hover:text-blue-700'>
                   Forgot Your Password?
-                </a>
+                </Link>
               </div>
             </div>
             <div className='flex w-full'>
