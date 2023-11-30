@@ -10,9 +10,10 @@ import { getErrorFromResponse } from '@/lib/utils'
 import { AuthContext, AuthContextType } from '@/app/(auth)/_components/AuthContextProvider'
 import { useContext } from 'react'
 import { IUser } from '@/interfaces/users.interface'
+import { FaRegUserCircle } from 'react-icons/fa'
 
 export default function UserNavigation() {
-  const { setAuth } = useContext(AuthContext) as AuthContextType
+  const { auth, setAuth } = useContext(AuthContext) as AuthContextType
   const router = useRouter()
   // Create a mutation to logout
   const logoutMutation = useMutation({
@@ -43,23 +44,25 @@ export default function UserNavigation() {
       <PopoverTrigger className='flex items-center lg:order-2'>
         <button
           type='button'
-          className='flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'
+          className='flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0'
           id='user-menu-button'
           aria-expanded='false'
         >
           <span className='sr-only'>Open user menu</span>
-          <img
-            className='w-8 h-8 rounded-full'
-            src='https://flowbite.com/docs/images/people/profile-picture-5.jpg'
-            alt='user photo'
-          />
+          {auth.profile.avatar ? (
+            <img className='w-9 h-9 rounded-full' src={auth.profile.avatar} alt='user photo' />
+          ) : (
+            <FaRegUserCircle size={36} color='white' />
+          )}
         </button>
       </PopoverTrigger>
       <PopoverContent className='p-0 w-56'>
         <div className='z-50 text-base list-none bg-gray-100 rounded divide-y divide-gray-300 shadow dark:bg-gray-700 dark:divide-gray-600'>
           <div className='py-3 px-4'>
-            <span className='block text-sm font-semibold text-gray-900 dark:text-white'>Neil sims</span>
-            <span className='block text-sm text-gray-500 truncate dark:text-gray-400'>name@flowbite.com</span>
+            <span className='block text-sm font-semibold text-gray-900 dark:text-white first-letter:uppercase'>
+              {auth.profile.name}
+            </span>
+            <span className='block text-sm text-gray-500 truncate dark:text-gray-400'>{auth.profile.email}</span>
           </div>
           <ul className='py-1 text-gray-500 dark:text-gray-400' aria-labelledby='dropdown'>
             <li className='cursor-pointer'>
