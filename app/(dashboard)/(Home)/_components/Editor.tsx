@@ -1,13 +1,14 @@
 'use client'
-import { useState } from 'react'
 import ReactQuill from 'react-quill'
 import '@/styles/quill.snow.css'
+import { UseFormRegisterReturn } from 'react-hook-form'
 
-export default function Editor() {
-  const [value, setValue] = useState('')
+interface EditorProps {
+  content: string
+  setContent: React.Dispatch<React.SetStateAction<string>>
+}
 
-  console.log(value)
-
+export default function Editor({ content, setContent }: EditorProps) {
   const modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -34,8 +35,8 @@ export default function Editor() {
   return (
     <ReactQuill
       theme='snow'
-      value={value}
-      onChange={setValue}
+      value={content}
+      onChange={setContent}
       modules={modules}
       className='bg-white dark:text-black w-full h-full'
     />

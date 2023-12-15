@@ -8,7 +8,7 @@ class Api {
   constructor() {
     this.api = axios.create({
       baseURL: URL,
-      timeout: 5000,
+      timeout: 10000,
       headers: {
         'Content-Type': 'application/json'
       }

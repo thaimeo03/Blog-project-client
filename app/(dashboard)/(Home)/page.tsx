@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import Editor from './_components/Editor'
 import BlogList from './_components/BlogList'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import CreatePostSide from './_components/CreatePostSide'
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
               </DialogTrigger>
               <DialogContent className='sm:max-w-[425px] min-w-[800px] p-9 h-[90vh]'>
                 <ScrollArea className='w-full h-full'>
-                  <Editor />
+                  <CreatePostSide />
                   <ScrollBar orientation='horizontal' />
                 </ScrollArea>
               </DialogContent>
