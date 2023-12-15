@@ -1,4 +1,4 @@
-import { DataResponse } from './response.interface'
+import { DataResponse, DataResponseWithPagination } from './response.interface'
 
 export interface ICreatePostForm {
   title: string
@@ -13,3 +13,14 @@ export type ICreatePostSuccess = DataResponse<{
   createdAt: string
   updatedAt: string
 }>
+
+export interface IPostItem {
+  id: string
+  title: string
+  thumbnail: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type IGetAllPostsSuccess = DataResponseWithPagination<IPostItem[]>

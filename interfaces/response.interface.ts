@@ -23,6 +23,10 @@ export interface ErrorResponse extends AxiosError {
 // Pagination
 export interface Pagination {
   limit: number
-  page: number
+  current_page: number
   total_page: number
+}
+
+export interface DataResponseWithPagination<T> extends DataResponse<T> {
+  pagination: Pagination
 }
