@@ -26,6 +26,7 @@ export default function CreatePostSide() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<ICreatePost>({
     resolver: yupResolver(ICreatePostSchema)
@@ -33,37 +34,38 @@ export default function CreatePostSide() {
 
   // Upload image mutation
   const uploadImageMutation = useMutation({
-    mutationFn: (data: File) => uploadImageApi(data),
-    onSuccess: (result) => {
-      console.log(result)
-    },
-    onError: (error: ErrorResponse) => {
-      toast({
-        title: getErrorFromResponse(error),
-        variant: 'destructive'
-      })
-    }
+    mutationFn: (data: File) => uploadImageApi(data)
   })
 
   // Create post mutation
   const createPostMutation = useMutation({
-    mutationFn: (data: ICreatePost) => createPostApi(data),
-    onSuccess: (result) => {
-      console.log(result)
-    },
-    onError: (error: ErrorResponse) => {
+    mutationFn: (data: ICreatePost) => createPostApi(data)
+  })
+
+  const handleSubmitForm = async (data: ICreatePost) => {
+    try {
+      // Upload image before create post
+      const imageResponse = await uploadImageMutation.mutateAsync(data.thumbnail[0])
+      const createPostData = {
+        ...data,
+        thumbnail: imageResponse.data.url,
+        content
+      }
+      // Create post
+      const createPostResponse = await createPostMutation.mutateAsync(createPostData)
+      // Reset form
+      setContent('')
+      reset()
+      // Show toast
+      toast({
+        title: createPostResponse.message as string
+      })
+    } catch (error: any | ErrorResponse) {
       toast({
         title: getErrorFromResponse(error),
         variant: 'destructive'
       })
     }
-  })
-
-  const handleSubmitForm = (data: ICreatePost) => {
-    const dataForm = { ...data, content }
-    // Upload image before create post
-    uploadImageMutation.mutate(dataForm.thumbnail[0])
-    // createPostMutation.mutate(dataForm)
   }
 
   return (
