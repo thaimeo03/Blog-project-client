@@ -21,12 +21,12 @@ export interface ErrorResponse extends AxiosError {
 }
 
 // Pagination
-export interface Pagination {
+export interface IPagination {
   limit: number
   current_page: number
   total_page: number
 }
 
 export interface DataResponseWithPagination<T> extends DataResponse<T> {
-  pagination: Pagination
+  pagination: IPagination
 }

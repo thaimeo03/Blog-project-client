@@ -6,8 +6,8 @@ import Input from '@/components/Input'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ICreatePostSchema } from '@/common/schemas/posts.schema'
-import { useMutation } from '@tanstack/react-query'
-import { createPostApi } from '@/apis/posts.api'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createPostApi, getAllPostsApi } from '@/apis/posts.api'
 import { ErrorResponse } from '@/interfaces/response.interface'
 import { toast } from '@/components/ui/use-toast'
 import { getErrorFromResponse } from '@/lib/utils'
@@ -19,6 +19,7 @@ interface ICreatePost {
 }
 
 export default function CreatePostSide() {
+  const queryClient = useQueryClient()
   // Content post
   const [content, setContent] = useState('')
 
@@ -51,8 +52,12 @@ export default function CreatePostSide() {
         thumbnail: imageResponse.data.url,
         content
       }
-      // Create post
+      // Create post and fetch data again
       const createPostResponse = await createPostMutation.mutateAsync(createPostData)
+      await queryClient.prefetchQuery({
+        queryKey: ['posts'],
+        queryFn: () => getAllPostsApi()
+      })
       // Reset form
       setContent('')
       reset()

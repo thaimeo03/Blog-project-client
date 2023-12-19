@@ -6,6 +6,11 @@ export interface ICreatePostForm {
   content?: string
 }
 
+export interface IPostFilter {
+  limit: number
+  page: number
+}
+
 export type ICreatePostSuccess = DataResponse<{
   id: string
   thumbnail: string | null

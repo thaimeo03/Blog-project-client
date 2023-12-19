@@ -1,7 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import Editor from './_components/Editor'
 import BlogList from './_components/PostList'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import CreatePostSide from './_components/CreatePostSide'

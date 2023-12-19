@@ -1,4 +1,4 @@
-import { ErrorResponse } from '@/interfaces/response.interface'
+import { ErrorResponse, IPagination } from '@/interfaces/response.interface'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -27,4 +27,34 @@ export const formatDateFromISO = (date: string) => {
   })
 
   return formattedDate
+}
+
+export const pagesValue = (pagination: IPagination) => {
+  const totalPage = pagination.total_page
+  const pageNumbers: number[] = []
+
+  if (totalPage <= 0 || pagination.current_page <= 0 || pagination.current_page > totalPage) {
+    return pageNumbers // Trang hoặc tổng số trang không hợp lệ
+  }
+
+  if (totalPage <= 3) {
+    for (let i = 1; i <= totalPage; i++) {
+      pageNumbers.push(i)
+    }
+  } else {
+    if (pagination.current_page === 1) {
+      pageNumbers.push(1, 2, 3)
+    } else if (pagination.current_page === totalPage) {
+      pageNumbers.push(pagination.current_page - 2, pagination.current_page - 1, pagination.current_page)
+    } else {
+      pageNumbers.push(pagination.current_page - 1, pagination.current_page, pagination.current_page + 1)
+    }
+  }
+
+  return pageNumbers
+}
+
+export const convertObjToQueryString = (obj: Record<string, any>) => {
+  const res = new URLSearchParams(obj).toString()
+  return res
 }

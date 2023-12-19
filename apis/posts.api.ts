@@ -6,7 +6,7 @@ export const createPostApi = async (data: ICreatePostForm) => {
   return res.data
 }
 
-export const getAllPostsApi = async () => {
-  const res = await api.get<IGetAllPostsSuccess>(`${URL}/posts`)
+export const getAllPostsApi = async (filters: string) => {
+  const res = await api.get<IGetAllPostsSuccess>(`${URL}/posts?${filters}`)
   return res.data
 }
