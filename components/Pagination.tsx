@@ -4,31 +4,34 @@ import { IPagination } from '@/interfaces/response.interface'
 import { pagesValue } from '@/lib/utils'
 import { FormEvent, useState } from 'react'
 
-interface PaginationProps {
-  pagination: IPagination
-  filters: IPostFilter
-  setFilters: React.Dispatch<React.SetStateAction<IPostFilter>>
+interface PaginationProps<T> {
+  pagination?: IPagination
+  filters: T
+  setFilters: React.Dispatch<React.SetStateAction<T>>
 }
 
-export default function Pagination({ pagination, filters, setFilters }: PaginationProps) {
+export default function Pagination<T>({ pagination, filters, setFilters }: PaginationProps<T>) {
   // Calculate pages value
-  const pageList = pagesValue(pagination) || []
+  const pageList = pagination ? pagesValue(pagination) : []
   const [toPage, setToPage] = useState('')
 
-  const handleChangePage = (page: number) => {
+  const handleChangePage = (page?: number) => {
+    if (!page) return
     return setFilters({ ...filters, page: page })
   }
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    if ((Number(value) <= pagination.total_page && Number(value) > 0) || value === '') {
+    if ((pagination && Number(value) <= pagination.total_page && Number(value) > 0) || value === '') {
       setToPage(value.toString())
     }
   }
 
   const handleGoToPage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    return setFilters({ ...filters, page: Number(toPage) })
+    // Reset input
+    setFilters({ ...filters, page: Number(toPage) })
+    return setToPage('')
   }
 
   return (
@@ -39,21 +42,22 @@ export default function Pagination({ pagination, filters, setFilters }: Paginati
             Head
           </span>
         </li>
-        {pageList.map((page) => {
-          return (
-            <li key={page} onClick={() => handleChangePage(page)}>
-              <span
-                className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-400 hover:text-white cursor-pointer ${
-                  page === pagination.current_page ? 'bg-gray-400 text-white' : 'bg-white text-gray-700'
-                }`}
-              >
-                {page}
-              </span>
-            </li>
-          )
-        })}
+        {pagination &&
+          pageList.map((page) => {
+            return (
+              <li key={page} onClick={() => handleChangePage(page)}>
+                <span
+                  className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-400 hover:text-white cursor-pointer ${
+                    page === pagination.current_page ? 'bg-gray-400 text-white' : 'bg-white text-gray-700'
+                  }`}
+                >
+                  {page}
+                </span>
+              </li>
+            )
+          })}
 
-        <li onClick={() => handleChangePage(pagination.total_page)}>
+        <li onClick={() => handleChangePage(pagination && pagination.total_page)}>
           <span className='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 cursor-pointer'>
             Last
           </span>

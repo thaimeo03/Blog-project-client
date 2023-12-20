@@ -1,19 +1,16 @@
 'use client'
-import { IPostFilter } from '@/interfaces/posts.interface'
+import { convertObjToQueryString } from '@/lib/utils'
 import { useState } from 'react'
 
-// Define filter
-export const postFilters = {
-  limit: 3, // Hardcode
-  page: 1 // Hardcode
-}
-
-export default function useQueryWithFilters() {
+export default function useQueryWithFilters<T>(postFilters: T) {
   // Initialize state
-  const [filters, setFilters] = useState<IPostFilter>(postFilters)
+  const [filters, setFilters] = useState<T>(postFilters)
+
+  const queryParams = convertObjToQueryString(filters)
 
   return {
     filters,
-    setFilters
+    setFilters,
+    queryParams
   }
 }

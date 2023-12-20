@@ -2,21 +2,24 @@
 import { getAllPostsApi } from '@/apis/posts.api'
 import { useQuery } from '@tanstack/react-query'
 import PostItem from './PostItem'
-import useQueryWithFilters, { postFilters } from '@/common/hooks/useQueryWithFilters'
+import useQueryWithFilters from '@/common/hooks/useQueryWithFilters'
 import Pagination from '@/components/Pagination'
 import { convertObjToQueryString } from '@/lib/utils'
+import { IPostFilter } from '@/interfaces/posts.interface'
+
+// Hardcode
+const postFilters = {
+  limit: 3,
+  page: 1
+} as IPostFilter
 
 export default function PostList() {
-  const { filters, setFilters } = useQueryWithFilters()
+  const { filters, setFilters, queryParams } = useQueryWithFilters(postFilters)
 
   // Get posts
-  const {
-    data: posts,
-    isError,
-    isSuccess
-  } = useQuery({
+  const { data: posts, isError } = useQuery({
     queryKey: ['posts', filters],
-    queryFn: () => getAllPostsApi(convertObjToQueryString(filters))
+    queryFn: () => getAllPostsApi(queryParams)
   })
 
   return (
@@ -34,7 +37,7 @@ export default function PostList() {
           </div>
         )}
       </section>
-      {isSuccess && posts && <Pagination pagination={posts.pagination} filters={filters} setFilters={setFilters} />}
+      <Pagination pagination={posts && posts.pagination} filters={filters} setFilters={setFilters} />
     </div>
   )
 }

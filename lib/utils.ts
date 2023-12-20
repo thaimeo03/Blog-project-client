@@ -54,7 +54,7 @@ export const pagesValue = (pagination: IPagination) => {
   return pageNumbers
 }
 
-export const convertObjToQueryString = (obj: Record<string, any>) => {
-  const res = new URLSearchParams(obj).toString()
+export const convertObjToQueryString = <T>(obj: T) => {
+  const res = new URLSearchParams(obj as Record<string, any>).toString()
   return res
 }
