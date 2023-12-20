@@ -1,9 +1,5 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import FunctionalArea from './_components/FunctionalArea'
 import BlogList from './_components/PostList'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import CreatePostSide from './_components/CreatePostSide'
 
 export default function Home() {
   return (
@@ -11,17 +7,7 @@ export default function Home() {
       <div className='grid grid-cols-6'>
         <div className='col-span-1'>
           <div className='fixed'>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant='outline'>Create new blog</Button>
-              </DialogTrigger>
-              <DialogContent className='sm:max-w-[425px] min-w-[800px] p-9 h-[90vh]'>
-                <ScrollArea className='w-full h-full'>
-                  <CreatePostSide />
-                  <ScrollBar orientation='horizontal' />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+            <FunctionalArea />
           </div>
         </div>
         <div className='col-span-5'>

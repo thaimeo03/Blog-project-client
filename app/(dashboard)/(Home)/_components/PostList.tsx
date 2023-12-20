@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import PostItem from './PostItem'
 import useQueryWithFilters from '@/common/hooks/useQueryWithFilters'
 import Pagination from '@/components/Pagination'
-import { convertObjToQueryString } from '@/lib/utils'
 import { IPostFilter } from '@/interfaces/posts.interface'
 
 // Hardcode
