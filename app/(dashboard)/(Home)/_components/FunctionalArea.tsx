@@ -4,14 +4,22 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import CreatePostSide from './CreatePostSide'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useContext } from 'react'
+import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
 
 // Define text and value of select
-const options = [
+const options: { text: string; value: 'asc' | 'desc' }[] = [
   { text: 'Newest', value: 'desc' },
   { text: 'Oldest', value: 'asc' }
 ]
 
 export default function FunctionalArea() {
+  const { postFilters } = useContext(FilterContext) as FilterContextType
+
+  const handleChangeFilters = (value: 'asc' | 'desc') => {
+    return postFilters.setFilters({ ...postFilters.filters, createdAt: value })
+  }
+
   return (
     <div>
       {/* Create new blog */}
@@ -31,7 +39,7 @@ export default function FunctionalArea() {
 
       {/* Filters */}
       <div className='mt-4'>
-        <Select onValueChange={(value) => console.log(value)}>
+        <Select onValueChange={handleChangeFilters}>
           <SelectTrigger>
             <SelectValue placeholder='Filter' />
           </SelectTrigger>

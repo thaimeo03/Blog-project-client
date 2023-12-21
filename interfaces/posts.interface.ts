@@ -9,6 +9,7 @@ export interface ICreatePostForm {
 export interface IPostFilter {
   limit: number
   page: number
+  createdAt?: 'desc' | 'asc'
 }
 
 export type ICreatePostSuccess = DataResponse<{
