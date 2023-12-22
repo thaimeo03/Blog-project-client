@@ -1,4 +1,5 @@
 import { AuthContext, AuthContextType } from '@/app/(auth)/_components/AuthContextProvider'
+import Avatar from '@/components/Avatar'
 import { PATH_ROUTER } from '@/constants/route.constant'
 import { IPostItem } from '@/interfaces/posts.interface'
 import { formatDateFromISO } from '@/lib/utils'
@@ -15,7 +16,7 @@ export default function PostItem({ blog }: BlogItemProps) {
 
   return (
     <article className='w-full max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm'>
-      <a href={PATH_ROUTER.HOME}>
+      <a href={`${PATH_ROUTER.POST}/${blog.id}`}>
         <div className='overflow-hidden rounded-t-md'>
           {blog.thumbnail ? (
             <img
@@ -40,11 +41,7 @@ export default function PostItem({ blog }: BlogItemProps) {
         </div>
         <div className='flex blog-center mt-2 pt-3 ml-4 mr-2'>
           <div className='flex-none w-10 h-10 rounded-full'>
-            {auth.profile.avatar ? (
-              <img className='w-9 h-9 rounded-full' src={auth.profile.avatar} alt={auth.profile.name} />
-            ) : (
-              <FaRegUserCircle size={32} color='gray' />
-            )}
+            <Avatar src={auth.profile.avatar} />
           </div>
           <div className='ml-3'>
             <span className='block text-gray-900'>{auth.profile.name}</span>

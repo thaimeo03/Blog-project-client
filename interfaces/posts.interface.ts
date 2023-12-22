@@ -1,4 +1,5 @@
 import { DataResponse, DataResponseWithPagination } from './response.interface'
+import { IUser } from './users.interface'
 
 export interface ICreatePostForm {
   title: string
@@ -30,3 +31,9 @@ export interface IPostItem {
 }
 
 export type IGetAllPostsSuccess = DataResponseWithPagination<IPostItem[]>
+
+interface IPostWithAuthor extends IPostItem {
+  user: Pick<IUser, 'id' | 'name' | 'avatar'>
+}
+
+export type IGetPostByIdSuccess = DataResponse<IPostWithAuthor>

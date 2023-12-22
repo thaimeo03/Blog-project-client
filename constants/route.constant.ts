@@ -1,5 +1,6 @@
 export const PATH_ROUTER = {
   HOME: '/',
   LOGIN: '/login',
-  REGISTER: '/register'
+  REGISTER: '/register',
+  POST: '/post'
 } as const
