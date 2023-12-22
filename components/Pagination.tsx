@@ -1,23 +1,22 @@
 'use client'
 import { IPagination } from '@/interfaces/response.interface'
 import { pagesValue } from '@/lib/utils'
-import { FormEvent, useContext, useState } from 'react'
-import { FilterContext, FilterContextType } from './FilterContextProvider'
+import { FormEvent, useState } from 'react'
+import { IFilterContext } from './FilterContextProvider'
 
 interface PaginationProps<T> {
   pagination?: IPagination
+  filters: IFilterContext<T>
 }
 
-export default function Pagination<T>({ pagination }: PaginationProps<T>) {
-  const { postFilters } = useContext(FilterContext) as FilterContextType
-
+export default function Pagination<T>({ pagination, filters }: PaginationProps<T>) {
   // Calculate pages value
   const pageList = pagination ? pagesValue(pagination) : []
   const [toPage, setToPage] = useState('')
 
   const handleChangePage = (page?: number) => {
     if (!page) return
-    return postFilters.setFilters({ ...postFilters.filters, page: page })
+    return filters.setFilters({ ...filters.filters, page: page })
   }
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,7 @@ export default function Pagination<T>({ pagination }: PaginationProps<T>) {
   const handleGoToPage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Reset input
-    postFilters.setFilters({ ...postFilters.filters, page: Number(toPage) })
+    filters.setFilters({ ...filters.filters, page: Number(toPage) })
     return setToPage('')
   }
 

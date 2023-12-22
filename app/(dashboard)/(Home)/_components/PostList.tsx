@@ -8,13 +8,13 @@ import { useContext } from 'react'
 import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
 
 // Hardcode
-export const postFilters = {
+export const postFiltersInitialValue = {
   limit: 3,
   page: 1
 } as IPostFilter
 
 export default function PostList() {
-  const { postFilters } = useContext(FilterContext) as FilterContextType
+  const { postFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
 
   // Get posts
   const { data: posts, isError } = useQuery({
@@ -37,7 +37,7 @@ export default function PostList() {
           </div>
         )}
       </section>
-      <Pagination pagination={posts && posts.pagination} />
+      <Pagination pagination={posts && posts.pagination} filters={postFilters} />
     </div>
   )
 }
