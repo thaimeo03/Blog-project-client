@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import Editor from './Editor'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Input from '@/components/Input'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,6 +12,8 @@ import { ErrorResponse } from '@/interfaces/response.interface'
 import { toast } from '@/components/ui/use-toast'
 import { getErrorFromResponse } from '@/lib/utils'
 import { uploadImageApi } from '@/apis/medias.api'
+import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
+import { IPostFilter } from '@/interfaces/posts.interface'
 
 interface ICreatePost {
   title: string
@@ -20,6 +22,7 @@ interface ICreatePost {
 
 export default function CreatePostSide() {
   const queryClient = useQueryClient()
+  const { postFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
   // Content post
   const [content, setContent] = useState('')
 
@@ -56,7 +59,7 @@ export default function CreatePostSide() {
       const createPostResponse = await createPostMutation.mutateAsync(createPostData)
       await queryClient.prefetchQuery({
         queryKey: ['posts'],
-        queryFn: () => getAllPostsApi()
+        queryFn: () => getAllPostsApi(postFilters.queryParams)
       })
       // Reset form
       setContent('')

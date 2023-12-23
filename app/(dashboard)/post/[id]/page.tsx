@@ -3,9 +3,9 @@ import { getPostByIdApi } from '@/apis/posts.api'
 import Avatar from '@/components/Avatar'
 import BreadCrumb from '@/components/BreadCrumb'
 import Skeleton from '@/components/ui/Skeleton'
+import { PATH_ROUTER } from '@/constants/route.constant'
 import { formatDateFromISO } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
-import { FaRegUserCircle } from 'react-icons/fa'
 
 export default function PostDetail({ params }: { params: { id: string } }) {
   const { data: post, isFetching } = useQuery({
@@ -15,7 +15,7 @@ export default function PostDetail({ params }: { params: { id: string } }) {
 
   return (
     <div className='max-w-screen-xl mx-auto'>
-      <BreadCrumb />
+      <BreadCrumb nextRoute={{ name: 'Post', path: PATH_ROUTER.POST }} />
 
       <main className='mt-10'>
         {post && (

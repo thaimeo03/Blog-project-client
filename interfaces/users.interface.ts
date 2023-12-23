@@ -23,6 +23,13 @@ export interface IUser {
   updatedAt: string
 }
 
+export interface IUpdateProfile {
+  name: string
+  email: string
+  address: string | null
+  birthday: string | null
+}
+
 export type IAuthSuccess = DataResponse<{
   access_token: string
   refresh_token: string

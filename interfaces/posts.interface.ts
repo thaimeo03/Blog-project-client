@@ -30,7 +30,11 @@ export interface IPostItem {
   updatedAt: string
 }
 
-export type IGetAllPostsSuccess = DataResponseWithPagination<IPostItem[]>
+export interface IAllPostWithAuthor extends IPostItem {
+  user: Pick<IUser, 'id' | 'name' | 'avatar'>
+}
+
+export type IGetAllPostsSuccess = DataResponseWithPagination<IAllPostWithAuthor[]>
 
 interface IPostWithAuthor extends IPostItem {
   user: Pick<IUser, 'id' | 'name' | 'avatar'>

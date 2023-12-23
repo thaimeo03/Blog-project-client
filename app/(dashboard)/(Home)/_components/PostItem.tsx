@@ -1,19 +1,13 @@
-import { AuthContext, AuthContextType } from '@/app/(auth)/_components/AuthContextProvider'
 import Avatar from '@/components/Avatar'
 import { PATH_ROUTER } from '@/constants/route.constant'
-import { IPostItem } from '@/interfaces/posts.interface'
+import { IAllPostWithAuthor } from '@/interfaces/posts.interface'
 import { formatDateFromISO } from '@/lib/utils'
-import { useContext } from 'react'
-import { FaRegUserCircle } from 'react-icons/fa'
 
 interface BlogItemProps {
-  blog: IPostItem
+  blog: IAllPostWithAuthor
 }
 
 export default function PostItem({ blog }: BlogItemProps) {
-  // Get current user
-  const { auth } = useContext(AuthContext) as AuthContextType
-
   return (
     <article className='w-full max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm'>
       <a href={`${PATH_ROUTER.POST}/${blog.id}`}>
@@ -41,10 +35,10 @@ export default function PostItem({ blog }: BlogItemProps) {
         </div>
         <div className='flex blog-center mt-2 pt-3 ml-4 mr-2'>
           <div className='flex-none w-10 h-10 rounded-full'>
-            <Avatar src={auth.profile.avatar} />
+            <Avatar src={blog.user.avatar} />
           </div>
           <div className='ml-3'>
-            <span className='block text-gray-900'>{auth.profile.name}</span>
+            <span className='block text-gray-900'>{blog.user.name}</span>
             <span className='block text-gray-400 text-sm'>{formatDateFromISO(blog.createdAt)}</span>
           </div>
         </div>

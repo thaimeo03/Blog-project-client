@@ -1,6 +1,13 @@
 import { PATH_ROUTER } from '@/constants/route.constant'
 
-export default function BreadCrumb() {
+interface BreadCrumbProps {
+  nextRoute: {
+    name: string
+    path: string
+  }
+}
+
+export default function BreadCrumb({ nextRoute }: BreadCrumbProps) {
   return (
     <nav className='flex mt-3' aria-label='Breadcrumb'>
       <ol className='inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse'>
@@ -39,10 +46,10 @@ export default function BreadCrumb() {
               />
             </svg>
             <a
-              href='#'
+              href={nextRoute.path}
               className='ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white'
             >
-              Post
+              {nextRoute.name}
             </a>
           </div>
         </li>
