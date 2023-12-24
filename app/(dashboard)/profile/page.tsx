@@ -2,6 +2,7 @@
 import { deleteImagesApi, uploadImageApi } from '@/apis/medias.api'
 import { updateProfileApi } from '@/apis/users.api'
 import { AuthContext, AuthContextType } from '@/app/(auth)/_components/AuthContextProvider'
+import { IUpdateProfileSchema } from '@/common/schemas/users.schema'
 import Avatar from '@/components/Avatar'
 import BreadCrumb from '@/components/BreadCrumb'
 import Input from '@/components/Input'
@@ -12,6 +13,7 @@ import { PATH_ROUTER } from '@/constants/route.constant'
 import { ErrorResponse } from '@/interfaces/response.interface'
 import { IUpdateProfile } from '@/interfaces/users.interface'
 import { getErrorFromResponse } from '@/lib/utils'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { useContext, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -24,16 +26,19 @@ export default function Profile() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<IUpdateProfile>({
     defaultValues: {
       name: auth.profile.name,
       email: auth.profile.email,
       address: auth.profile.address,
-      birthday: auth.profile.birthday
-    }
-    // resolver: yupResolver(ICreatePostSchema)
+      birthday: new Date(auth.profile.birthday || '').toLocaleString('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      })
+    },
+    resolver: yupResolver(IUpdateProfileSchema)
   })
 
   // Update profile mutation
@@ -88,7 +93,21 @@ export default function Profile() {
   }
 
   // Handle submit form and call api
-  const handleSaveForm = (data: IUpdateProfile) => {}
+  const handleSaveForm = async (data: IUpdateProfile) => {
+    try {
+      const { message } = await updateProfileMutation.mutateAsync(data)
+      // Success
+      toast({
+        title: message as string
+      })
+      return setAuth((prev) => ({ ...prev, profile: { ...prev.profile, ...data } }))
+    } catch (error: ErrorResponse | any) {
+      toast({
+        title: getErrorFromResponse(error),
+        variant: 'destructive'
+      })
+    }
+  }
 
   return (
     <main className='container mx-auto px-4'>
@@ -140,7 +159,7 @@ export default function Profile() {
               >
                 Name
               </label>
-              <Input id='name' placeholder='Enter your name' register={register('name')} />
+              <Input id='name' placeholder='Enter your name' register={register('name')} errors={errors.name} />
             </div>
             <div className='space-y-2'>
               <label
@@ -165,7 +184,13 @@ export default function Profile() {
               >
                 Birthday
               </label>
-              <Input type='date' id='birthday' placeholder='Enter your birthday' register={register('birthday')} />
+              <Input
+                type='date'
+                id='birthday'
+                placeholder='Enter your birthday'
+                register={register('birthday')}
+                errors={errors.birthday}
+              />
             </div>
             <div className='space-y-2'>
               <label
@@ -174,7 +199,12 @@ export default function Profile() {
               >
                 Address
               </label>
-              <Input id='address' placeholder='Enter your address' register={register('address')} />
+              <Input
+                id='address'
+                placeholder='Enter your address'
+                register={register('address')}
+                errors={errors.address}
+              />
             </div>
 
             <div className='flex items-center p-6'>
