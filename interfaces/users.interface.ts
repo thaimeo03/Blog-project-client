@@ -24,10 +24,11 @@ export interface IUser {
 }
 
 export interface IUpdateProfile {
-  name: string
-  email: string
-  address: string | null
-  birthday: string | null
+  name?: string
+  email?: string
+  address?: string | null
+  birthday?: string | null
+  avatar?: string | null
 }
 
 export type IAuthSuccess = DataResponse<{

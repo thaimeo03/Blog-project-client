@@ -1,5 +1,6 @@
 import { IUploadImageSuccess } from '@/interfaces/medias.interface'
 import api, { URL } from './api'
+import { MessageResponse } from '@/interfaces/response.interface'
 
 export const uploadImageApi = async (file: File) => {
   const formData = new FormData()
@@ -11,5 +12,10 @@ export const uploadImageApi = async (file: File) => {
     }
   })
 
+  return res.data
+}
+
+export const deleteImagesApi = async (urls: string[]) => {
+  const res = await api.delete<MessageResponse>(`${URL}/medias/images`, urls)
   return res.data
 }

@@ -3,9 +3,10 @@ import { twMerge } from 'tailwind-merge'
 
 interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   src: string | null
+  iconSize?: number
 }
 
-export default function Avatar({ src, className, ...rest }: AvatarProps) {
+export default function Avatar({ src, className, iconSize, ...rest }: AvatarProps) {
   return (
     <div>
       {src ? (
@@ -17,7 +18,7 @@ export default function Avatar({ src, className, ...rest }: AvatarProps) {
           loading='lazy'
         />
       ) : (
-        <FaRegUserCircle size={36} color='gray' />
+        <FaRegUserCircle size={iconSize || 36} color='gray' />
       )}
     </div>
   )

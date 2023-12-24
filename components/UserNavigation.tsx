@@ -21,7 +21,7 @@ export default function UserNavigation() {
     onSuccess: () => {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
-      router.push(PATH_ROUTER.LOGIN)
+      window.location.href = PATH_ROUTER.LOGIN
       return setAuth({
         isAuth: false,
         profile: {} as IUser

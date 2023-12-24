@@ -1,4 +1,4 @@
-import { IAuthSuccess, ILoginForm, IProfileUser, IRegisterForm } from '@/interfaces/users.interface'
+import { IAuthSuccess, ILoginForm, IProfileUser, IRegisterForm, IUpdateProfile } from '@/interfaces/users.interface'
 import axios from 'axios'
 import api, { URL } from './api'
 import { MessageResponse } from '@/interfaces/response.interface'
@@ -23,5 +23,12 @@ export const logoutApi = async () => {
 
 export const getIProfileUserApi = async () => {
   const res = await api.get<IProfileUser>(`${URL}/users/profile`)
+  return res.data
+}
+
+export const updateProfileApi = async (data: IUpdateProfile) => {
+  console.log(data)
+
+  const res = await api.patch<MessageResponse>(`${URL}/users`, data)
   return res.data
 }
