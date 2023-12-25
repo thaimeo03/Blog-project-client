@@ -27,8 +27,6 @@ export const getIProfileUserApi = async () => {
 }
 
 export const updateProfileApi = async (data: IUpdateProfile) => {
-  console.log(data)
-
   const res = await api.patch<MessageResponse>(`${URL}/users`, data)
   return res.data
 }

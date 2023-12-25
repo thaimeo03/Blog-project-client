@@ -9,6 +9,7 @@ import Pagination from '@/components/Pagination'
 import CardWithConfig from '@/components/CardWithConfig'
 import BreadCrumb from '@/components/BreadCrumb'
 import { PATH_ROUTER } from '@/constants/route.constant'
+import PopoverPostConfig from './PopoverPostConfig'
 
 export default function MyPostList() {
   const { myPostFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
@@ -32,9 +33,12 @@ export default function MyPostList() {
           <div className='mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3'>
             {posts?.data &&
               posts.data.map((items) => (
-                <CardWithConfig>
+                <div className='relative' key={items.id}>
+                  <CardWithConfig>
+                    <PopoverPostConfig id={items.id} />
+                  </CardWithConfig>
                   <PostItem key={items.id} blog={items} />
-                </CardWithConfig>
+                </div>
               ))}
           </div>
         )}

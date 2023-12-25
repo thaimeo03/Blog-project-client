@@ -95,6 +95,9 @@ export default function Profile() {
   // Handle submit form and call api
   const handleSaveForm = async (data: IUpdateProfile) => {
     try {
+      if (data.birthday == '') {
+        data.birthday = null
+      }
       const { message } = await updateProfileMutation.mutateAsync(data)
       // Success
       toast({

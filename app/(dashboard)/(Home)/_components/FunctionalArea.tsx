@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import CreatePostSide from './CreatePostSide'
+import PostSideFeature from '../../_components/PostSideFeature'
 import FilterSelection from '../../_components/FilterSelection'
 import { useContext } from 'react'
 import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
@@ -21,7 +21,7 @@ export default function FunctionalArea() {
           </DialogTrigger>
           <DialogContent className='sm:max-w-[425px] min-w-[800px] p-9 h-[90vh]'>
             <ScrollArea className='w-full h-full'>
-              <CreatePostSide />
+              <PostSideFeature />
               <ScrollBar orientation='horizontal' />
             </ScrollArea>
           </DialogContent>

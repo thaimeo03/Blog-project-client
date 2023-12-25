@@ -7,6 +7,8 @@ export interface ICreatePostForm {
   content?: string
 }
 
+export interface IUpdatePostForm extends ICreatePostForm {}
+
 export interface IPostFilter {
   limit: number
   page: number

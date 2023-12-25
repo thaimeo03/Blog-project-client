@@ -1,12 +1,40 @@
 'use client'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { useState } from 'react'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
-import Editor from '../../_components/Editor'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import PostSideFeature from '../../_components/PostSideFeature'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { deletePostApi, getMyPostsApi, getPostByIdApi } from '@/apis/posts.api'
+import { useContext } from 'react'
+import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
+import { IPostFilter } from '@/interfaces/posts.interface'
 
-export default function PopoverPostConfig() {
-  const [content, setContent] = useState('')
+interface PopoverPostConfigProps {
+  id: string
+}
+
+export default function PopoverPostConfig({ id }: PopoverPostConfigProps) {
+  const queryClient = useQueryClient()
+  const { myPostFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
+
+  const { data: post } = useQuery({
+    queryKey: ['post'],
+    queryFn: () => getPostByIdApi(id)
+  })
+
+  const deletePostMutation = useMutation({
+    mutationFn: (id: string) => deletePostApi(id),
+    onSuccess: () => {
+      queryClient.prefetchQuery({
+        queryKey: ['my-posts', myPostFilters.filters],
+        queryFn: () => getMyPostsApi(myPostFilters.queryParams)
+      })
+    }
+  })
+
+  const handleDeletePost = () => {
+    deletePostMutation.mutate(id)
+  }
 
   return (
     <ul>
@@ -18,15 +46,14 @@ export default function PopoverPostConfig() {
           </DialogTrigger>
           <DialogContent className='sm:max-w-[425px] min-w-[800px] p-9 h-[90vh]'>
             <ScrollArea className='w-full h-full'>
-              {/* Change a lot of things */}
-              <Editor content={content} setContent={setContent} />
+              {post && <PostSideFeature isUpdate id={id} post={post} />}
               <ScrollBar orientation='horizontal' />
             </ScrollArea>
           </DialogContent>
         </Dialog>
       </li>
       <li className='px-2 py-1 cursor-pointer hover:bg-gray-200 rounded'>
-        <div className='flex items-center space-x-2 '>
+        <div className='flex items-center space-x-2' onClick={handleDeletePost}>
           <FaRegTrashAlt size={17} color='red' />
           <span className='text-sm'>Delete</span>
         </div>

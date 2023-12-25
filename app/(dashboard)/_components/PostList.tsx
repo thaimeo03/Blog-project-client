@@ -6,12 +6,13 @@ import Pagination from '@/components/Pagination'
 import { IPostFilter } from '@/interfaces/posts.interface'
 import { useContext } from 'react'
 import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
+import Skeleton from '@/components/ui/Skeleton'
 
 export default function PostList() {
   const { postFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
 
   // Get posts
-  const { data: posts, isError } = useQuery({
+  const { data: posts, isFetching } = useQuery({
     queryKey: ['posts', postFilters.filters],
     queryFn: () => getAllPostsApi(postFilters.queryParams)
   })
@@ -23,8 +24,8 @@ export default function PostList() {
           <h1 className='text-3xl text-gray-800 font-semibold'>Blog</h1>
           <p className='mt-3 text-gray-500'>Blogs that are loved by the community. Updated every hour.</p>
         </div>
-        {isError ? (
-          <div className='text-center text-2xl text-red-600 font-semibold'>Something went wrong</div>
+        {isFetching ? (
+          <Skeleton className='max-w-screen-lg' />
         ) : (
           <div className='mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3'>
             {posts?.data && posts.data.map((items) => <PostItem key={items.id} blog={items} />)}
