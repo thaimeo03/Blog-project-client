@@ -1,5 +1,5 @@
 import FunctionalArea from './_components/FunctionalArea'
-import BlogList from './_components/PostList'
+import PostList from '../_components/PostList'
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
           </div>
         </div>
         <div className='col-span-5'>
-          <BlogList />
+          <PostList />
         </div>
       </div>
     </main>

@@ -34,7 +34,7 @@ export default function Pagination<T>({ pagination, filters }: PaginationProps<T
   }
 
   return (
-    <nav className='mt-5 col-span-full mx-auto'>
+    <nav className='mt-5 flex justify-center col-span-full'>
       <ul className='inline-flex -space-x-px text-sm'>
         <li onClick={() => handleChangePage(1)}>
           <span className='flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-500 cursor-pointer'>

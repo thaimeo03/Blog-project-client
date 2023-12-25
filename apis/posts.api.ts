@@ -20,3 +20,8 @@ export const getPostByIdApi = async (id: string) => {
   const res = await api.get<IGetPostByIdSuccess>(`${URL}/posts/${id}`)
   return res.data
 }
+
+export const getMyPostsApi = async (filters: string) => {
+  const res = await api.get<IGetAllPostsSuccess>(`${URL}/posts/author?${filters}`)
+  return res.data
+}

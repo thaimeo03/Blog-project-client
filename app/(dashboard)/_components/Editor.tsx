@@ -1,7 +1,6 @@
 'use client'
 import ReactQuill from 'react-quill'
 import '@/styles/quill.snow.css'
-import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface EditorProps {
   content: string

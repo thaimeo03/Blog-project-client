@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import Editor from './Editor'
+import Editor from '../../_components/Editor'
 import { useContext, useState } from 'react'
 import Input from '@/components/Input'
 import { useForm } from 'react-hook-form'

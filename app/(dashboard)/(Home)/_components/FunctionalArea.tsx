@@ -3,22 +3,13 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import CreatePostSide from './CreatePostSide'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import FilterSelection from '../../_components/FilterSelection'
 import { useContext } from 'react'
 import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
-
-// Define text and value of select
-const options: { text: string; value: 'asc' | 'desc' }[] = [
-  { text: 'Newest', value: 'desc' },
-  { text: 'Oldest', value: 'asc' }
-]
+import { IPostItem } from '@/interfaces/posts.interface'
 
 export default function FunctionalArea() {
-  const { postFilters } = useContext(FilterContext) as FilterContextType
-
-  const handleChangeFilters = (value: 'asc' | 'desc') => {
-    return postFilters.setFilters({ ...postFilters.filters, createdAt: value })
-  }
+  const { postFilters } = useContext(FilterContext) as FilterContextType<IPostItem>
 
   return (
     <div>
@@ -38,20 +29,7 @@ export default function FunctionalArea() {
       </div>
 
       {/* Filters */}
-      <div className='mt-4'>
-        <Select onValueChange={handleChangeFilters}>
-          <SelectTrigger>
-            <SelectValue placeholder='Filter' />
-          </SelectTrigger>
-          <SelectContent>
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.text}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <FilterSelection filterContexts={postFilters} />
     </div>
   )
 }

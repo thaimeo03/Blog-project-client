@@ -7,12 +7,6 @@ import { IPostFilter } from '@/interfaces/posts.interface'
 import { useContext } from 'react'
 import { FilterContext, FilterContextType } from '@/components/FilterContextProvider'
 
-// Hardcode
-export const postFiltersInitialValue = {
-  limit: 3,
-  page: 1
-} as IPostFilter
-
 export default function PostList() {
   const { postFilters } = useContext(FilterContext) as FilterContextType<IPostFilter>
 

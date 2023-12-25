@@ -11,6 +11,7 @@ import { AuthContext, AuthContextType } from '@/app/(auth)/_components/AuthConte
 import { useContext } from 'react'
 import { IUser } from '@/interfaces/users.interface'
 import { FaRegUserCircle } from 'react-icons/fa'
+import Link from 'next/link'
 
 export default function UserNavigation() {
   const { auth, setAuth } = useContext(AuthContext) as AuthContextType
@@ -66,12 +67,20 @@ export default function UserNavigation() {
           </div>
           <ul className='py-1 text-gray-500 dark:text-gray-400' aria-labelledby='dropdown'>
             <li className='cursor-pointer'>
-              <a
+              <Link
                 href={PATH_ROUTER.PROFILE}
                 className='block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white'
               >
                 My profile
-              </a>
+              </Link>
+            </li>
+            <li className='cursor-pointer'>
+              <Link
+                href={PATH_ROUTER.MY_POSTS}
+                className='block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white'
+              >
+                My posts
+              </Link>
             </li>
             <li className='cursor-pointer'>
               <div

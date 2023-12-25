@@ -3,5 +3,6 @@ export const PATH_ROUTER = {
   LOGIN: '/login',
   REGISTER: '/register',
   POST: '/post',
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  MY_POSTS: '/my-posts'
 } as const

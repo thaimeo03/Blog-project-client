@@ -2,6 +2,7 @@ import Avatar from '@/components/Avatar'
 import { PATH_ROUTER } from '@/constants/route.constant'
 import { IAllPostWithAuthor } from '@/interfaces/posts.interface'
 import { formatDateFromISO } from '@/lib/utils'
+import Link from 'next/link'
 
 interface BlogItemProps {
   blog: IAllPostWithAuthor
@@ -9,8 +10,11 @@ interface BlogItemProps {
 
 export default function PostItem({ blog }: BlogItemProps) {
   return (
-    <article className='w-full max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm'>
-      <a href={`${PATH_ROUTER.POST}/${blog.id}`}>
+    <article
+      title='Detail post'
+      className='relative w-full max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm'
+    >
+      <Link href={`${PATH_ROUTER.POST}/${blog.id}`}>
         <div className='overflow-hidden rounded-t-md'>
           {blog.thumbnail ? (
             <img
@@ -45,7 +49,7 @@ export default function PostItem({ blog }: BlogItemProps) {
         <div className='pt-3 ml-4 mr-2 mb-3'>
           <h3 className='text-xl text-gray-900'>{blog.title}</h3>
         </div>
-      </a>
+      </Link>
     </article>
   )
 }
