@@ -12,6 +12,7 @@ export interface IUpdatePostForm extends ICreatePostForm {}
 export interface IPostFilter {
   limit: number
   page: number
+  title?: string
   createdAt?: 'desc' | 'asc'
 }
 

@@ -15,7 +15,6 @@ import Link from 'next/link'
 
 export default function UserNavigation() {
   const { auth, setAuth } = useContext(AuthContext) as AuthContextType
-  const router = useRouter()
   // Create a mutation to logout
   const logoutMutation = useMutation({
     mutationFn: () => logoutApi(),

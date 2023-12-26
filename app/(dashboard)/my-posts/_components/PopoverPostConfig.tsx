@@ -40,7 +40,7 @@ export default function PopoverPostConfig({ id }: PopoverPostConfigProps) {
     <ul>
       <li className='px-2 py-1 cursor-pointer hover:bg-gray-200 rounded'>
         <Dialog>
-          <DialogTrigger className='flex items-center space-x-2 '>
+          <DialogTrigger className='flex items-center space-x-2 w-full'>
             <FaRegEdit size={18} color='blue' />
             <span className='text-sm'>Edit</span>
           </DialogTrigger>
@@ -53,7 +53,7 @@ export default function PopoverPostConfig({ id }: PopoverPostConfigProps) {
         </Dialog>
       </li>
       <li className='px-2 py-1 cursor-pointer hover:bg-gray-200 rounded'>
-        <div className='flex items-center space-x-2' onClick={handleDeletePost}>
+        <div className='flex items-center space-x-2 w-full' onClick={handleDeletePost}>
           <FaRegTrashAlt size={17} color='red' />
           <span className='text-sm'>Delete</span>
         </div>
