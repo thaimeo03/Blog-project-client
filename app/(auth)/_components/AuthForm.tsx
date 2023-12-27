@@ -1,7 +1,7 @@
 'use client'
 import { PATH_ROUTER } from '@/constants/route.constant'
 import Link from 'next/link'
-import { FaFacebookF } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
 import Input from '../../../components/Input'
 import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -13,7 +13,7 @@ import { loginApi, registerApi } from '@/apis/users.api'
 import { ErrorResponse } from '@/interfaces/response.interface'
 import { useToast } from '../../../components/ui/use-toast'
 import { getErrorFromResponse } from '@/lib/utils'
-import { useState } from 'react'
+import { getGoogleAuthUrl } from '@/common/configs/oauth.config'
 
 function saveToken(result: IAuthSuccess) {
   localStorage.setItem('access_token', result.data.access_token)
@@ -66,12 +66,15 @@ export default function AuthForm() {
         <div className='font-medium self-center text-xl sm:text-2xl uppercase text-gray-800'>
           {getInfoByRole({ registerInfo: 'Create New Account', loginInfo: 'Login To Your Account' })}
         </div>
-        <button className='relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'>
-          <span className='absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500'>
-            <FaFacebookF size={18} />
-          </span>
-          <span>Login with Facebook</span>
-        </button>
+        <Link
+          href={getGoogleAuthUrl()}
+          className='flex justify-center mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'
+        >
+          <div className='flex space-x-2 items-center'>
+            <FcGoogle size={18} />
+            <span>Login with Google</span>
+          </div>
+        </Link>
         <div className='relative mt-10 h-px bg-gray-300'>
           <div className='absolute left-0 top-0 flex justify-center w-full -mt-2'>
             <span className='bg-white px-4 text-xs text-gray-500 uppercase'>

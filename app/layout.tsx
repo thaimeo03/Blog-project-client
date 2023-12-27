@@ -21,8 +21,8 @@ const queryClient = new QueryClient({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
+    <html lang='en' suppressHydrationWarning={true}>
+      <body>
         <AuthContextProvider>
           <QueryClientProvider client={queryClient}>
             <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>

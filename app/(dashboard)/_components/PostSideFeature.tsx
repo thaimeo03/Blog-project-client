@@ -75,7 +75,6 @@ export default function PostSideFeature({ isUpdate, id, post }: PostSideFeatureP
       // Create, update post and fetch data again
       let postResponse: ICreatePostSuccess | MessageResponse
       if (isUpdate && id && post) {
-        console.log(postData)
         postResponse = await updatePostMutation.mutateAsync({ id: id, data: postData })
       } else {
         postResponse = await createPostMutation.mutateAsync(postData)
