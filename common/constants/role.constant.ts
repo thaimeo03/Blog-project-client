@@ -3,3 +3,9 @@ export enum ROLE {
   ADMIN = 'ADMIN',
   BANNED = 'BANNED'
 }
+
+export enum BLOG_STATUS {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED'
+}

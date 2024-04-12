@@ -1,3 +1,4 @@
+import { BLOG_STATUS } from '@/common/constants/role.constant'
 import { DataResponse, DataResponseWithPagination } from './response.interface'
 import { IUser } from './users.interface'
 
@@ -29,6 +30,7 @@ export interface IPostItem {
   title: string
   thumbnail: string
   content: string
+  status: BLOG_STATUS
   createdAt: string
   updatedAt: string
 }
@@ -44,3 +46,7 @@ interface IPostWithAuthor extends IPostItem {
 }
 
 export type IGetPostByIdSuccess = DataResponse<IPostWithAuthor>
+
+export interface IBlogInfoForAdmin extends Pick<IPostWithAuthor, 'id' | 'title' | 'status' | 'createdAt'> {
+  user: Pick<IUser, 'id' | 'name' | 'avatar'>
+}

@@ -1,6 +1,6 @@
 import { IUserInfoForAdmin } from '@/interfaces/users.interface'
-import { columns } from './BloggerCoulumn'
-import { DataTable } from './BloggerDataTable'
+import { columns } from './BloggerColumn'
+import { DataTable } from './DataTable'
 import { ROLE } from '@/common/constants/role.constant'
 
 export default function BlogAccounts() {
@@ -11,8 +11,13 @@ export default function BlogAccounts() {
       role: ROLE.USER,
       name: 'John Doe',
       email: 'RrKpJ@example.com'
+    },
+    {
+      id: '2',
+      role: ROLE.ADMIN,
+      name: 'John Doe',
+      email: 'RrKpJ@example.com'
     }
-    // ...
   ] as IUserInfoForAdmin[]
 
   return (

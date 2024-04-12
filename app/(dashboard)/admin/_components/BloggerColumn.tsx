@@ -1,5 +1,6 @@
 'use client'
 
+import { ROLE } from '@/common/constants/role.constant'
 import { Button } from '@/components/ui/button'
 import { IUserInfoForAdmin } from '@/interfaces/users.interface'
 import {
@@ -11,7 +12,7 @@ import {
   DropdownMenuTrigger
 } from '@radix-ui/react-dropdown-menu'
 import { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal } from 'lucide-react'
+import { Check, MoreHorizontal } from 'lucide-react'
 
 export const columns: ColumnDef<IUserInfoForAdmin>[] = [
   {
@@ -43,14 +44,21 @@ export const columns: ColumnDef<IUserInfoForAdmin>[] = [
               <MoreHorizontal className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(blogger.id)}>
-              Copy payment ID
+          <DropdownMenuContent className='bg-popover border border-red-600 p-2' align='end'>
+            <DropdownMenuLabel className='font-semibold'>Change role</DropdownMenuLabel>
+            <DropdownMenuSeparator className='border' />
+            <DropdownMenuItem className='my-2 cursor-pointer flex items-center space-x-1 justify-center'>
+              {blogger.role === ROLE.USER && <Check size={16} />}
+              <span>Blogger</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem className='my-2 cursor-pointer flex items-center space-x-1 justify-center'>
+              {blogger.role === ROLE.ADMIN && <Check size={16} />}
+              <span>Admin</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className='my-2 cursor-pointer flex items-center space-x-1 justify-center'>
+              {blogger.role === ROLE.BANNED && <Check size={16} />}
+              <span>Ban</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

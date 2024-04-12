@@ -6,6 +6,7 @@ import Skeleton from '@/components/ui/Skeleton'
 import { PATH_ROUTER } from '@/constants/route.constant'
 import { formatDateFromISO } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
+import CommentSide from '../components/CommentSide'
 
 export default function PostDetail({ params }: { params: { id: string } }) {
   const { data: post, isFetching } = useQuery({
@@ -49,6 +50,8 @@ export default function PostDetail({ params }: { params: { id: string } }) {
         {isFetching && <Skeleton />}
       </main>
       {/* main ends here */}
+
+      <CommentSide />
     </div>
   )
 }
