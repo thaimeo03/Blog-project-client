@@ -1,3 +1,4 @@
+import { ROLE } from '@/common/constants/role.constant'
 import { DataResponse } from './response.interface'
 
 export interface IRegisterForm {
@@ -16,6 +17,7 @@ export interface IUser {
   id: string
   name: string
   email: string
+  role: ROLE
   avatar: string | null
   address: string | null
   birthday: string | null
@@ -43,3 +45,5 @@ export type IRefreshTokenSuccess = DataResponse<{
 export type IProfileUser = DataResponse<{
   user: IUser
 }>
+
+export interface IUserInfoForAdmin extends Pick<IUser, 'id' | 'name' | 'email' | 'role'> {}

@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <ProtectedRoutes>
       <FilterContextProvider>
         <Header />
-        <div className='md:container px-2'>{children}</div>
+        <div className='md:container px-2 h-screen '>{children}</div>
       </FilterContextProvider>
     </ProtectedRoutes>
   )

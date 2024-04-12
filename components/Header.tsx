@@ -2,6 +2,7 @@ import UserNavigation from './UserNavigation'
 import { ThemeToggle } from './ThemeToggle'
 import SearchBar from './SearchBar'
 import Logo from './Logo'
+import AdminRouter from './AdminRouter'
 
 export default function Header() {
   return (
@@ -31,6 +32,7 @@ export default function Header() {
             <SearchBar />
           </div>
           <div className='flex gap-x-3'>
+            <AdminRouter />
             <ThemeToggle />
             <UserNavigation />
           </div>
